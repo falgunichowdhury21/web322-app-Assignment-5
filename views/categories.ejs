@@ -1,0 +1,46 @@
+<div class="container">
+  <h2>Categories
+      <a href="/categories/add" class="btn btn-success pull-right">Add Category</a>
+  </h2>
+  <p><%= message || "" %></p>
+  <% if (categories && categories.length > 0) { %>
+      <table>
+          <thead>
+              <tr>
+                  <th>Category ID</th>
+                  <th>Category Name</th>
+                  <th></th> <!-- Empty header for remove actions -->
+              </tr>
+          </thead>
+          <tbody>
+                  <tr>
+                      <td><%= category.id %></td>
+                      <td><%= category.category %></td>
+                      <td><ul>
+                          <% categories.forEach(category => { %>
+                            <li>
+                              <strong><%= category.name %></strong>
+                              <form action="/remove-category" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="<%= category.id %>">
+                                <button type="submit">Remove Category</button>
+                              </form>
+                              <ul>
+                                <% category.Items.forEach(item => { %>
+                                  <li>
+                                    <%= item.name %>
+                                    <form action="/remove-item" method="POST" style="display:inline;">
+                                      <input type="hidden" name="id" value="<%= item.id %>">
+                                      <button type="submit">Remove</button>
+                                    </form>
+                                  </li>
+                                <% }); %>
+                              </ul>
+                      </td>
+                  </tr>
+              <% }); %>
+          </tbody>
+      </table>
+  <% } else { %>
+      <p>No categories found.</p>
+  <% } %>
+</div>
